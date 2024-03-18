@@ -40,7 +40,10 @@ Plots.default(; margin=5Plots.mm)
 # Static Case
 ```{julia}
 let
-    sow = ParkingGarageSOW(; demand_growth_rate=80.0, n_years=20, discount_rate=0.12)
+    demand_growth_rate = 0:10.0:90.0
+    n_years = 20
+    discount_rate = 0.12
+    sow = ParkingGarageSOW(; demand_growth_rate=80.0, n_years, discount_rate)
     n_levels = 2:12
     policies = [StaticPolicy(i) for i in n_levels]
     profits = [simulate(sow, policy) for policy in policies]
@@ -58,3 +61,5 @@ let
     hline!([0])
 end
 ```
+
+# Static Case
