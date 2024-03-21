@@ -34,8 +34,6 @@ If we are following the adaptive policy, then the rule is slightly more complica
 We add `n_levels` in the first year. Then, every future year we compare the capacity and demand. If the demand is greater than the capacity, we add a level.
 """
 function get_action(x::ParkingGarageState, policy::AdaptivePolicy)
-    capacity = calculate_capacity(x)
-    x.demand = calculate_demand(x.year, s.demand_growth_rate)
     if x.year == 1
         return ParkingGarageAction(policy.n_levels_init)
     elseif x.demand > capacity
@@ -54,6 +52,7 @@ function run_timestep(
 
     # calculate the demand for this year
     x.demand = calculate_demand(x.year, s.demand_growth_rate)
+    capacity = calculate_capacity(x)
 
     # the very first step is to decide on the action
     a = get_action(x, policy)
@@ -67,7 +66,7 @@ function run_timestep(
     x.n_levels += a.Δn_levels
 
     # revenue -- you can only sell parking spaces that you have AND that are wanted
-    capacity = calculate_capacity(x)
+    # capacity = calculate_capacity(x)
     revenue = 11_000 * min(capacity, x.demand)
 
     # lease costs are fixed
