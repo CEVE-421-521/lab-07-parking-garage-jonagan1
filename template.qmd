@@ -59,6 +59,7 @@ let
     )
     hline!([0])
 end
+
 ```
 
 # Static Case
