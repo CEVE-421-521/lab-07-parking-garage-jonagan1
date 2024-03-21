@@ -35,7 +35,7 @@ We add `n_levels` in the first year. Then, every future year we compare the capa
 """
 function get_action(x::ParkingGarageState, policy::AdaptivePolicy)
     if x.year == 1
-        return ParkingGarageAction(policy.n_levels)
+        return ParkingGarageAction(policy.n_levelsinit)
     elseif x.demand > capacity
         return ParkingGarageAction(1)
     else 
