@@ -81,7 +81,7 @@ let
         profits_mean[i]= (profits1[i] + profits2[i] +profits3[i]) / 3
     end
     
-    profits_mean_plot = permutedims(profits_mean, [2,1])
+    profits_mean_plot = transpose(profits_mean)
      plot(
         n_levels,
         profits_mean_plot;
@@ -97,6 +97,34 @@ let
 end
 ```
 
+# Adaptive Deterministic Case
+```{julia}
+let
+    sow = ParkingGarageSOW(; demand_growth_rate=80.0, n_years=20, discount_rate=0.12)
+    n_levels = 2:12
+    policies = [AdaptivePolicy(i) for i in n_levels]
+    profits = [simulate(sow, policy) for policy in policies]
+    plot(
+        n_levels,
+        profits;
+        ylabel="NPV Profits [Million USD]",
+        xlabel="Number of levels",
+        legend=false,
+        title="$(sow.n_years) Year Horizon, $(sow.discount_rate) Discount, $(sow.demand_growth_rate) Demand Growth",
+        size=(800, 400),
+        marker=:circle,
+        xticks=n_levels,
+    )
+    hline!([0])
+end
+
+```
+
+# Adaptive Stochastic Case
+```{julia}
+
+
+```
 
       
 
